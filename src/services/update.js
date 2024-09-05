@@ -1,5 +1,5 @@
-import { commonsConstants, response, usersConstants, successCodes, clientErrorCodes} from 'commons-layer';
-import { Mysql, usersQueries } from 'mysql-layer';
+import { commonsConstants, response, usersConstants, successCodes, clientErrorCodes} from 'JsTaskManager-commons-layer';
+import { Mysql, usersQueries } from 'JsTaskManager-mysql-layer';
 import { userToDto } from '../dto/usersToDto.js';
 
 export const update = async (req, res) => {

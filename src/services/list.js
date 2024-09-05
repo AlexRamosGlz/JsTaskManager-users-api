@@ -1,5 +1,5 @@
-import { response, commonsConstants, clientErrorCodes, successCodes, usersConstants} from 'commons-layer';
-import { Mysql, usersQueries } from 'mysql-layer';
+import { response, commonsConstants, clientErrorCodes, successCodes, usersConstants} from 'JsTaskManager-commons-layer';
+import { Mysql, usersQueries } from 'JsTaskManager-mysql-layer';
 
 export const list = async (req, res) => {
     try {

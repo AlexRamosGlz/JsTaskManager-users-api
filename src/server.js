@@ -1,5 +1,5 @@
 import express from 'express';
-import { awsRequestId, commonsConstants, response, successCodes, clientErrorCodes} from 'commons-layer';
+import { awsRequestId, commonsConstants, response, successCodes, clientErrorCodes} from 'JsTaskManager-commons-layer';
 import router from './routes/router.js';
 
 const app = express();
