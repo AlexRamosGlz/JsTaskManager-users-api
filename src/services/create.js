@@ -7,12 +7,12 @@ export const create = async (req, res) => {
 
         const user = {
             username: req.body.username,
-            password: req.body.password
+            password: req.password
         }
 
         const newUser = Users.createEntity(user);
 
-        console.log(`${usersConstants.baseLog} ${commonsConstants.CREATE} ${JSON.stringify(newUser)}`);
+        console.log(`${usersConstants.BASELOG} ${commonsConstants.CREATE} ${JSON.stringify(newUser)}`);
         
         await Mysql.execute(usersQueries.add, [
             newUser.id,
@@ -26,7 +26,7 @@ export const create = async (req, res) => {
 
         return response.success(res, req.awsRequestId, userCreated, usersConstants.USER_CREATED, successCodes.OK);
     }catch(error) {
-        console.error(`${usersConstants.baseLog} ${commonsConstants.CREATE} ${commonsConstants.ERROR} ${error}`);
+        console.error(`${usersConstants.BASELOG} ${commonsConstants.CREATE} ${commonsConstants.ERROR} ${error}`);
         return response.error(res, req.awsRequestId, error, usersConstants.USER_NOT_CREATED, clientErrorCodes.BAD_REQUEST)
     }
 }

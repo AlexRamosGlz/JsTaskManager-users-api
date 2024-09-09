@@ -9,7 +9,7 @@ export const remove = async (req, res) => {
         const user = await Mysql.execute(usersQueries.getById, userId);
 
         if(!user) {
-            console.log(`${usersConstants.baseLog} ${commonsConstants.GET} ${commonsConstants.ERROR} ${JSON.stringify(user)} `);
+            console.log(`${usersConstants.BASELOG} ${commonsConstants.GET} ${commonsConstants.ERROR} ${JSON.stringify(user)} `);
             return response.error(res, req.awsRequestId, null, usersConstants.USERS_NOT_FOUND, clientErrorCodes.NOT_FOUND);
         }
 
@@ -19,7 +19,7 @@ export const remove = async (req, res) => {
 
         return response.success(res, req.awsRequestId, userDTO, usersConstants.USER_DELETED, successCodes.OK);
     }catch(error) {
-        console.error(`${usersConstants.baseLog} ${commonsConstants.ERROR} ${error}`);
+        console.error(`${usersConstants.BASELOG} ${commonsConstants.ERROR} ${error}`);
         return response.error(res, req.awsRequestId, error, usersConstants.USER_NOT_DELETED, clientErrorCodes.BAD_REQUEST)
     }
 }

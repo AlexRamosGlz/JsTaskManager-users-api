@@ -9,18 +9,18 @@ export const update = async (req, res) => {
         const user = await Mysql.execute(usersQueries.getById, userId);
 
         if(!user) {
-            console.log(`${usersConstants.baseLog} ${commonsConstants.UPDATE} ${commonsConstants.ERROR} ${JSON.stringify(user)} `);
+            console.log(`${usersConstants.BASELOG} ${commonsConstants.UPDATE} ${commonsConstants.ERROR} ${JSON.stringify(user)} `);
             return response.error(res, req.awsRequestId, null, usersConstants.USERS_NOT_FOUND, clientErrorCodes.NOT_FOUND);
         }
 
-        console.log(`${usersConstants.baseLog} ${commonsConstants.UPDATE} ${JSON.stringify(user)} `);
+        console.log(`${usersConstants.BASELOG} ${commonsConstants.UPDATE} ${JSON.stringify(user)} `);
 
         const userToUpdate = { 
             username: req.body.user ?? user.username,
             updatedAt: new Date()
         }
 
-        console.log(`${usersConstants.baseLog} ${commonsConstants.UPDATE} ${JSON.stringify(userToUpdate)} `);
+        console.log(`${usersConstants.BASELOG} ${commonsConstants.UPDATE} ${JSON.stringify(userToUpdate)} `);
 
         await Mysql.execute(usersQueries.update, [
             userToUpdate.username,
@@ -31,7 +31,7 @@ export const update = async (req, res) => {
 
         return response.success(res, req.awsRequestId, userDTO, usersConstants.USER_UPDATED, successCodes.OK);
     }catch(error) {
-        console.error(`${usersConstants.baseLog} ${commonsConstants.ERROR} ${error}`);
+        console.error(`${usersConstants.BASELOG} ${commonsConstants.ERROR} ${error}`);
         return response.error(res, req.awsRequestId, error, usersConstants.USER_NOT_UPDATED, clientErrorCodes.BAD_REQUEST)
     }
 }
