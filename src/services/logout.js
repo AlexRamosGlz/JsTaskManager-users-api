@@ -1,9 +1,10 @@
 import { response, serverErrorCodes, commonsConstants, usersConstants, successCodes} from "JsTaskManager-commons-layer";
-import { Mysql } from 'JsTaskManager-mysql-layer';
+import { Mysql, usersTokensQueries } from 'JsTaskManager-mysql-layer';
 
-export const logout = (req, res) => {
+export const logout = async (req, res) => {
     try {
         //TODO remove token(s) from DB
+        await Mysql.execute(usersTokensQueries.removeToken, token);
 
         return response.success(res, req.awsRequestId, null, commonsConstants.SUCCESS_LOGOUT, successCodes.OK);
     }catch(error) {
