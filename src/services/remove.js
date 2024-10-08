@@ -2,11 +2,17 @@ import { commonsConstants, response, usersConstants, successCodes, clientErrorCo
 import { Mysql, usersQueries } from 'JsTaskManager-mysql-layer';
 import { userToDto } from '../dto/usersToDto.js';
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 export const remove = async (req, res) => {
     try {
-        const userId = req.body.id;
+        const userId = req.params.id;
 
-        const user = await Mysql.execute(usersQueries.getById, userId);
+        const [user] = await Mysql.execute(usersQueries.getById, userId);
 
         if(!user) {
             console.log(`${usersConstants.BASELOG} ${commonsConstants.GET} ${commonsConstants.ERROR} ${JSON.stringify(user)} `);

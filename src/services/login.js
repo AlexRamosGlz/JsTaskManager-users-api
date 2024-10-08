@@ -1,35 +1,33 @@
-import { response, serverErrorCodes, commonsConstants, usersConstants, clientErrorCodes} from "JsTaskManager-commons-layer";
-import { Mysql, usersTokensQueries, UsersToken, usersQueries} from 'JsTaskManager-mysql-layer';
+import { response, serverErrorCodes, commonsConstants, usersConstants, clientErrorCodes, successCodes} from "JsTaskManager-commons-layer";
+import { Mysql, usersTokensQueries, UsersTokens, usersQueries} from 'JsTaskManager-mysql-layer';
 import { userToDto } from "../dto/usersToDto.js";
 import { generateToken } from "../middleware/generateToken.js";
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 export const login = async (req, res) => {
     try {
+        let user;
+        const { username } = req.body;
 
-        const payload = {
-            username: req.body.username
-        }
+        [ user ] = await Mysql.execute(usersQueries.getIdByUserName, username);
 
-        const token = generateToken(payload)
-
-        //TODO store token in DB
-        const userId = await Mysql.execute(usersQueries.getIdByUserName, payload.username);
-
-        if(!userId) {
+        if(!user) {
             console.error(`${usersConstants.BASELOG}[login()]${usersConstants.USERS_NOT_FOUND}`);
             return response.error(res, req.awsRequestId, null, usersConstants.USERS_NOT_FOUND, clientErrorCodes.NOT_FOUND);
         }
         
-        const newUserTokens = new UsersToken(userId, token);
+        const token = await generateToken(username, user.id);
 
-        await Mysql.execute(usersTokensQueries.add, [
-            newUserTokens.userId,
-            newUserTokens.token,
-            newUserTokens.createdAt
-        ])
-        
+        user = await Mysql.execute(usersQueries.getById, user.id);
+
         const userDTO = userToDto(user);
-        return response.success(res, req.awsRequestId, {...userDTO, token}, commonsConstants.SUCCESS_LOGIN, successCodes.OK);
+                
+        return response.success(res, req.awsRequestId,  {...userDTO, token}, commonsConstants.SUCCESS_LOGIN, successCodes.OK);
     }catch(error) {
         console.log(`${usersConstants.BASELOG}${commonsConstants.ERROR} ${error}`);
         return response.error(res, req.awsRequestId, error, commonsConstants.ERROR_LOGIN, serverErrorCodes.INTERNAL_SERVER_ERROR);

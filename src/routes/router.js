@@ -8,6 +8,7 @@ import { userValidations } from 'JsTaskManager-commons-layer';
 import { hashPassword } from "../middleware/hashPassword.js";
 import { login } from "../services/login.js";
 import { logout } from "../services/logout..js";
+import { authenticateToken } from "../middleware/authenticateToken.js";
 
 const router = Router();
 
@@ -31,8 +32,8 @@ router.put('/:id', [userValidations.updateUserCommons], update);
 /**
  *  DELETE /users
  */
+router.delete('/logout', authenticateToken, logout);
 router.delete('/:id', remove);
-router.delete('/logout', logout);
 
 
 export default router;

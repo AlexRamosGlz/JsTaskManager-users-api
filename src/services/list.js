@@ -1,6 +1,12 @@
 import { response, commonsConstants, clientErrorCodes, successCodes, usersConstants} from 'JsTaskManager-commons-layer';
 import { Mysql, usersQueries } from 'JsTaskManager-mysql-layer';
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 export const list = async (req, res) => {
     try {
         const users = await Mysql.execute(usersQueries.list);

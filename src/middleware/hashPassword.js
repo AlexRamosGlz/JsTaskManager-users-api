@@ -1,6 +1,13 @@
 import bcrypt from 'bcrypt';
 import { response, usersConstants, commonsConstants, serverErrorCodes, clientErrorCodes} from 'JsTaskManager-commons-layer';
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
 export const hashPassword = (req, res, next) => {
     try {
 
