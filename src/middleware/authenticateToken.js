@@ -18,6 +18,7 @@ export const authenticateToken = (req, res, next) => {
             return response.error(res, req.awsResquestId, null,commonsConstants.ERROR, commonsConstants.UNAUTHORIZED, clientErrorCodes.BAD_REQUEST);
         }
 
+        req.token = token;
         req.user = jwt.verify(token, process.env.TOKEN_SECRET);
         req.token = token;
         next();
