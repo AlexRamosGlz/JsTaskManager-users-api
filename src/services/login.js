@@ -23,7 +23,7 @@ export const login = async (req, res) => {
         
         const token = await generateToken(username, user.id);
 
-        user = await Mysql.execute(usersQueries.getById, user.id);
+        [ user ] = await Mysql.execute(usersQueries.getById, user.id);
 
         const userDTO = userToDto(user);
                 
